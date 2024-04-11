@@ -41,7 +41,7 @@ However, if you expected a 1:2 ratio (i.e., 1,000 A for 500 B), the actual amoun
 ## Problem 3
 Please examine the mint function in the UniswapV2Pair contract. Upon initial liquidity minting, a minimum liquidity is subtracted. What is the rationale behind this design?
 
-> Solution
+> Solution  
 In Uniswap V2's UniswapV2Pair contract, 1,000 units of liquidity are subtracted during the initial liquidity minting to:  
 Prevent Price Manipulation: It discourages initial liquidity providers from manipulating the price and then quickly removing their liquidity for a profit.  
 Avoid Division by Zero: It ensures that the pool never has zero liquidity, which is important for preventing division by zero errors in the constant product formula used by Uniswap V2.  
@@ -49,7 +49,7 @@ Avoid Division by Zero: It ensures that the pool never has zero liquidity, which
 ## Problem 4
 Investigate the minting function in the UniswapV2Pair contract. When depositing tokens (not for the first time), liquidity can only be obtained using a specific formula. What is the intention behind this?
 
-> Solution
+> Solution  
 In the UniswapV2Pair contract, when depositing tokens (not for the first time), the minting function uses a specific formula to determine liquidity token allocation. This is intended to:  
 Maintain Proportionality: The amount of liquidity tokens minted is proportional to the depositor's share in the liquidity pool, ensuring fair distribution.  
 Preserve Constant Product: The formula helps maintain the constant product formula x×y=k, crucial for the AMM mechanism in Uniswap.  
@@ -59,7 +59,7 @@ This approach upholds fairness in the allocation of liquidity tokens and ensures
 ## Problem 5
 What is a sandwich attack, and how might it impact you when initiating a swap?
 
-> Solution
+> Solution  
 A sandwich attack is a type of trading manipulation that occurs in decentralized finance (DeFi) platforms, particularly in AMM-based decentralized exchanges like Uniswap. It impacts users initiating token swaps and works as follows:  
 Detection of a Victim's Transaction: An attacker monitors the blockchain for large pending swap transactions from users.  
 Front-Running: The attacker places their own swap transaction with a higher gas fee, buying the same asset the user is trying to buy, but before the user's transaction gets processed.  
