@@ -42,14 +42,30 @@ However, if you expected a 1:2 ratio (i.e., 1,000 A for 500 B), the actual amoun
 Please examine the mint function in the UniswapV2Pair contract. Upon initial liquidity minting, a minimum liquidity is subtracted. What is the rationale behind this design?
 
 > Solution
+In Uniswap V2's UniswapV2Pair contract, 1,000 units of liquidity are subtracted during the initial liquidity minting to:  
+Prevent Price Manipulation: It discourages initial liquidity providers from manipulating the price and then quickly removing their liquidity for a profit.  
+Avoid Division by Zero: It ensures that the pool never has zero liquidity, which is important for preventing division by zero errors in the constant product formula used by Uniswap V2.  
 
 ## Problem 4
 Investigate the minting function in the UniswapV2Pair contract. When depositing tokens (not for the first time), liquidity can only be obtained using a specific formula. What is the intention behind this?
 
 > Solution
+In the UniswapV2Pair contract, when depositing tokens (not for the first time), the minting function uses a specific formula to determine liquidity token allocation. This is intended to:  
+Maintain Proportionality: The amount of liquidity tokens minted is proportional to the depositor's share in the liquidity pool, ensuring fair distribution.  
+Preserve Constant Product: The formula helps maintain the constant product formula x×y=k, crucial for the AMM mechanism in Uniswap.  
+Prevent Dilution and Manipulation: It ensures that adding liquidity doesn't unfairly dilute the share of existing liquidity providers or allow for manipulation of the system.  
+This approach upholds fairness in the allocation of liquidity tokens and ensures that rewards are proportionate to each provider's contribution.  
 
 ## Problem 5
 What is a sandwich attack, and how might it impact you when initiating a swap?
 
 > Solution
+A sandwich attack is a type of trading manipulation that occurs in decentralized finance (DeFi) platforms, particularly in AMM-based decentralized exchanges like Uniswap. It impacts users initiating token swaps and works as follows:  
+Detection of a Victim's Transaction: An attacker monitors the blockchain for large pending swap transactions from users.  
+Front-Running: The attacker places their own swap transaction with a higher gas fee, buying the same asset the user is trying to buy, but before the user's transaction gets processed.  
+Back-Running: After the user's transaction is executed, which typically drives the price up due to the initial purchase, the attacker immediately sells the asset they just bought, often at a higher price.  
+This results in:  
+The victim receiving less of the output token than expected due to the increased price caused by the attacker's front-running transaction.  
+A potential loss to the victim as they buy high and sell low in a very short time frame.  
+Sandwich attacks are a risk in decentralized environments because of the transparent and deterministic nature of blockchain transactions, which allows attackers to spot and exploit such opportunities.  
 
